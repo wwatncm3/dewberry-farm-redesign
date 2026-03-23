@@ -25,6 +25,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [showPopup, setShowPopup] = useState(false)
+  const [moreOpen, setMoreOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -68,20 +69,25 @@ function App() {
             <li><a onClick={() => scrollTo('tulips')}>U-Pick Tulips</a></li>
             <li><a onClick={() => scrollTo('sunflowers')}>U-Pick Sunflowers</a></li>
             <li><a onClick={() => scrollTo('photography')}>Photography</a></li>
-            <li><a onClick={() => scrollTo('weddings')}>Weddings</a></li>
-            <li><a onClick={() => scrollTo('animals')}>Farm Animals</a></li>
-            <li><a onClick={() => scrollTo('contact')} className="nav-cta">Contact</a></li>
+            <li className="nav-more" onMouseEnter={() => setMoreOpen(true)} onMouseLeave={() => setMoreOpen(false)}>
+              <a className="more-trigger">More</a>
+              {moreOpen && (
+                <ul className="dropdown">
+                  <li><a onClick={() => { scrollTo('weddings'); setMoreOpen(false) }}>Weddings</a></li>
+                  <li><a onClick={() => { scrollTo('animals'); setMoreOpen(false) }}>Farm Animals</a></li>
+                  <li><a onClick={() => { scrollTo('gallery'); setMoreOpen(false) }}>Gallery</a></li>
+                  <li><a onClick={() => { scrollTo('info'); setMoreOpen(false) }}>Location</a></li>
+                  <li><a onClick={() => { scrollTo('contact'); setMoreOpen(false) }}>Contact Us</a></li>
+                </ul>
+              )}
+            </li>
           </ul>
         </div>
       </nav>
 
       {/* ===== HOME / HERO ===== */}
       <section id="hero" className="hero">
-        <div className="hero-bg" aria-hidden="true">
-          <div className="tulip-row row-1"></div>
-          <div className="tulip-row row-2"></div>
-          <div className="tulip-row row-3"></div>
-        </div>
+        <img src="/images/tulip-fields-wide.png" alt="" className="hero-image" width="1920" height="1080" fetchpriority="high" />
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <p className="hero-tag">Est. 1925 &mdash; Kernersville, NC</p>
@@ -102,15 +108,7 @@ function App() {
         <div className="container">
           <div className="about-grid">
             <div className="about-image">
-              <div className="image-placeholder">
-                <svg viewBox="0 0 80 100" className="tulip-svg" aria-hidden="true">
-                  <path d="M40 95 L40 45" stroke="currentColor" strokeWidth="2.5" fill="none" />
-                  <path d="M40 55 Q25 50 20 60" stroke="currentColor" strokeWidth="2" fill="none" />
-                  <ellipse cx="40" cy="30" rx="14" ry="20" fill="currentColor" opacity="0.15" />
-                  <path d="M40 10 Q30 25 28 35 Q35 40 40 38 Q45 40 52 35 Q50 25 40 10Z" fill="currentColor" opacity="0.3" />
-                </svg>
-                <p>The Farmhouse</p>
-              </div>
+              <img src="/images/farm-sign.png" alt="Dewberry Farm wooden entrance sign" className="about-img" width="800" height="960" loading="lazy" />
             </div>
             <div className="about-text">
               <p className="section-tag">Our Story</p>
@@ -208,14 +206,7 @@ function App() {
         <div className="container">
           <div className="feature-grid">
             <div className="feature-visual tulip-visual">
-              <svg viewBox="0 0 200 280" className="flower-illustration" aria-hidden="true">
-                <path d="M100 270 L100 140" stroke="#3a6b35" strokeWidth="3" fill="none" />
-                <path d="M100 180 Q70 170 55 190" stroke="#3a6b35" strokeWidth="2.5" fill="none" />
-                <path d="M100 200 Q130 190 145 210" stroke="#3a6b35" strokeWidth="2.5" fill="none" />
-                <ellipse cx="100" cy="85" rx="35" ry="55" fill="#e63946" opacity="0.15" />
-                <path d="M100 30 Q75 60 70 90 Q85 105 100 100 Q115 105 130 90 Q125 60 100 30Z" fill="#e63946" opacity="0.6" />
-                <path d="M100 35 Q85 55 80 80 Q90 95 100 90 Q110 95 120 80 Q115 55 100 35Z" fill="#ff6b7a" opacity="0.4" />
-              </svg>
+              <img src="/images/tulips-close.png" alt="Rows of colorful tulips at Dewberry Farm" className="feature-img" width="600" height="600" loading="lazy" />
             </div>
             <div className="feature-text">
               <p className="section-tag">Spring &mdash; Now Open</p>
@@ -325,7 +316,7 @@ function App() {
       {/* ===== WEDDINGS ===== */}
       <section id="weddings" className="weddings">
         <div className="container">
-          <div className="wedding-banner">
+          <div className="wedding-banner three-col">
             <div className="wedding-text">
               <p className="section-tag">Private Events</p>
               <h2>Micro Weddings &amp; Elopements</h2>
@@ -344,6 +335,9 @@ function App() {
                 <li>Use of the grounds for 6 hours</li>
               </ul>
               <button className="btn btn-primary" onClick={() => scrollTo('contact')}>Inquire About Weddings</button>
+            </div>
+            <div className="wedding-image-wrap">
+              <img src="/images/wedding-ceremony.png" alt="Wedding ceremony setup at Dewberry Farm" className="wedding-img" width="800" height="533" loading="lazy" />
             </div>
             <div className="wedding-stats">
               <div className="w-stat"><span>16</span><p>Max Guests</p></div>
@@ -390,6 +384,28 @@ function App() {
               <div className="animal-placeholder goat-bg"></div>
               <h4>Goats, Sheep &amp; Ponies</h4>
               <p>Friendly farm friends for the whole family</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== GALLERY ===== */}
+      <section id="gallery" className="gallery">
+        <div className="container">
+          <p className="section-tag center">See the Farm</p>
+          <h2 className="section-title">Gallery</h2>
+          <div className="gallery-grid">
+            <div className="gallery-item">
+              <img src="/images/tulip-fields-wide.png" alt="Tulip fields at Dewberry Farm" width="600" height="400" loading="lazy" />
+            </div>
+            <div className="gallery-item">
+              <img src="/images/tulips-close.png" alt="Close up of tulip rows" width="600" height="400" loading="lazy" />
+            </div>
+            <div className="gallery-item">
+              <img src="/images/wedding-ceremony.png" alt="Wedding ceremony at Dewberry Farm" width="600" height="400" loading="lazy" />
+            </div>
+            <div className="gallery-item">
+              <img src="/images/farm-sign.png" alt="Dewberry Farm entrance sign" width="600" height="400" loading="lazy" />
             </div>
           </div>
         </div>
